@@ -19,7 +19,12 @@
         </div>
         <p>Если вам нужно создать новый</p>
         <div class="items-end">
-          <q-btn style="width: 300px" color="primary" label="Создать" />
+          <q-btn
+            style="width: 300px"
+            color="primary"
+            label="Создать"
+            @click="newCabal"
+          />
         </div>
       </div>
     </div>
@@ -32,19 +37,19 @@
   margin-bottom: 10px
 </style>
 
-<script>
-import { useCabalStore } from "stores/cabal";
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import { LocalStorage } from "quasar";
+<script lang="ts">
+//  import { useCabalStore } from 'stores/cabal';
+// import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+// import { LocalStorage } from 'quasar';
 
 export default {
-  name: "LoginName",
+  name: 'LoginName',
   setup() {
-    const $cabalStore = useCabalStore();
-    const $router = useRouter();
+    // const $cabalStore = useCabalStore();
+    // const $router = useRouter();
 
-    const cabal = window.electronCabal.cabal;
+    const client = window.electronCabal.client;
 
     //console.log(LocalStorage.getItem("fio"));
     //LocalStorage.set("fio", "AAA");
@@ -53,12 +58,17 @@ export default {
     //state.items.push({ name: 'shoes', quantity: 1 })
     //state.hasChanged = true
 
-    const formCabal = ref("");
-    const formLogin = ref("");
+    const formCabal = ref('');
+    const formLogin = ref('');
+
+    const newCabal = function () {
+      console.log(client.createCabal());
+    };
 
     return {
       formCabal,
       formLogin,
+      newCabal,
     };
   },
 };

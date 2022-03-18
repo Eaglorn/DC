@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-export const useCabalStore = defineStore("cabal", {
+export const useCabalStore = defineStore('cabal', {
   state: () => ({
     cabals: {},
     cabalSettings: {},
