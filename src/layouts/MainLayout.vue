@@ -33,22 +33,22 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-//import { useCabalStore } from 'stores/cabal';
-import EssentialLink from 'components/EssentialLink.vue';
+<script>
+import { defineComponent, ref } from "vue";
+import { useCabalStore } from "stores/cabal";
+import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: "Docs",
+    caption: "quasar.dev",
+    icon: "school",
+    link: "https://quasar.dev",
   },
 ];
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
 
   components: {
     EssentialLink,
@@ -56,10 +56,10 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
-    const client = window.electronCabal.client;
+    const cabalClient = window.apiCabal.client;
 
     const logCabal = function () {
-      console.log(client);
+      console.log(cabalClient);
     };
 
     return {

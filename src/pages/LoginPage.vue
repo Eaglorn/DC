@@ -23,7 +23,7 @@
             style="width: 300px"
             color="primary"
             label="Создать"
-            @click="newCabal"
+            @click="createCabal()"
           />
         </div>
       </div>
@@ -37,38 +37,35 @@
   margin-bottom: 10px
 </style>
 
-<script lang="ts">
-//  import { useCabalStore } from 'stores/cabal';
-// import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-// import { LocalStorage } from 'quasar';
+<script>
+import { useCabalStore } from "stores/cabal";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { LocalStorage } from "quasar";
 
 export default {
-  name: 'LoginName',
+  name: "LoginName",
   setup() {
-    // const $cabalStore = useCabalStore();
-    // const $router = useRouter();
+    const $cabalStore = useCabalStore();
+    const $router = useRouter();
 
-    const client = window.electronCabal.client;
+    const cabalClient = window.apiCabal.client;
 
     //console.log(LocalStorage.getItem("fio"));
     //LocalStorage.set("fio", "AAA");
     //console.log(LocalStorage.getItem("fio"));
 
-    //state.items.push({ name: 'shoes', quantity: 1 })
-    //state.hasChanged = true
+    const formCabal = ref("");
+    const formLogin = ref("");
 
-    const formCabal = ref('');
-    const formLogin = ref('');
-
-    const newCabal = function () {
-      console.log(client.createCabal());
+    const createCabal = function () {
+      window.apiCabal.createCabal();
     };
 
     return {
       formCabal,
       formLogin,
-      newCabal,
+      createCabal,
     };
   },
 };

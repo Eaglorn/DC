@@ -16,27 +16,28 @@
  *   })
  */
 
-import { contextBridge } from 'electron';
-import Client from 'cabal-client';
-import path from 'path';
-import { homedir } from 'os';
+import { contextBridge } from "electron";
+import cabal from "cabal-client";
+import path from "path";
+import { homedir } from "os";
 
 const HOME_DIR = homedir();
 const DATA_DIR = path.join(
   HOME_DIR,
-  '.cabal',
-  `v${Client.getDatabaseVersion()}`
+  ".cabal",
+  `v${cabal.getDatabaseVersion()}`
 );
+const MAX_FEEDS = 1000;
 
-const client = new Client({
+const client = new cabal({
   maxFeeds: 1000,
   config: {
     dbdir: DATA_DIR,
   },
-  preferredPort: 3600,
+  preferredPort: "3600",
 });
 
-contextBridge.exposeInMainWorld('electronCabal', {
+contextBridge.exposeInMainWorld("apiCabal", {
   client: client,
-  createCabal: cabal.createCabal(),
+  createCabal: client.createCabal(),
 });
