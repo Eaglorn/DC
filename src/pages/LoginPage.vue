@@ -39,15 +39,12 @@
 
 <script>
 import { useCabalStore } from "stores/cabal";
-import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { LocalStorage } from "quasar";
 
 export default {
   name: "LoginName",
   setup() {
     const $cabalStore = useCabalStore();
-    const $router = useRouter();
 
     const cabalClient = window.apiCabal.client;
 
@@ -59,7 +56,10 @@ export default {
     const formLogin = ref("");
 
     const createCabal = function () {
-      window.apiCabal.createCabal();
+      const res = window.apiCabal.createCabal().then((result) => {
+        return result;
+      });
+      console.log(res);
     };
 
     return {

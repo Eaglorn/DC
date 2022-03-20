@@ -35,7 +35,6 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { useCabalStore } from "stores/cabal";
 import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [

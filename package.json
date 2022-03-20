@@ -25,7 +25,6 @@
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.0.0",
     "electron": "^17.1.2",
-    "electron-builder": "^22.4.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^8.5.0",
@@ -33,15 +32,15 @@
     "prettier": "^2.5.1"
   },
   "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
+    "last 1 Chrome versions",
+    "last 1 Firefox versions",
+    "last 1 Edge versions",
+    "last 1 Safari versions",
+    "last 1 Android versions",
+    "last 1 ChromeAndroid versions",
+    "last 1 FirefoxAndroid versions",
+    "last 1 iOS versions",
+    "last 1 Opera versions"
   ],
   "engines": {
     "node": ">= 12.22.1",

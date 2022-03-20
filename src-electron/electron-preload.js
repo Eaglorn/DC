@@ -17,7 +17,7 @@
  */
 
 import { contextBridge } from "electron";
-import cabal from "cabal-client";
+import Cabal from "cabal-client";
 import path from "path";
 import { homedir } from "os";
 
@@ -25,11 +25,10 @@ const HOME_DIR = homedir();
 const DATA_DIR = path.join(
   HOME_DIR,
   ".cabal",
-  `v${cabal.getDatabaseVersion()}`
+  `v${Cabal.getDatabaseVersion()}`
 );
-const MAX_FEEDS = 1000;
 
-const client = new cabal({
+const cabalClient = new Cabal({
   maxFeeds: 1000,
   config: {
     dbdir: DATA_DIR,
@@ -37,7 +36,31 @@ const client = new cabal({
   preferredPort: "3600",
 });
 
+cabalClient.getCurrentCabal;
+
+/*contextBridge.exposeInMainWorld("apiCabal", {
+  client: cabalClient,
+  createCabal: async () => {
+    var newCabal = null;
+    await cabalClient.createCabal().then((cabal) => {
+      newCabal = cabal;
+    });
+    return newCabal;
+  },
+  getCurrentCabal: function () {
+    return cabalClient.getCurrentCabal();
+  },
+});*/
+
 contextBridge.exposeInMainWorld("apiCabal", {
-  client: client,
-  createCabal: client.createCabal(),
+  cabalClient,
+  async createCabal() {
+    var newCabal = await cabalClient.createCabal().then((cabal) => {
+      return cabal;
+    });
+    return newCabal.key;
+  },
+  getCurrentCabal() {
+    return cabalClient.getCurrentCabal();
+  },
 });
