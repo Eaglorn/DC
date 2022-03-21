@@ -1,6 +1,10 @@
-import { app, BrowserWindow, nativeTheme } from "electron";
+import { app, BrowserWindow, nativeTheme, ipcMain } from "electron";
 import path from "path";
 import os from "os";
+import fs from "fs";
+import Cabal from "cabal-client";
+import { homedir } from "os";
+const { Sequelize, Op, Model, DataTypes } = require("@sequelize/core");
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
@@ -60,4 +64,93 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+const HOME_DIR = homedir();
+const DATA_DIR = path.join(HOME_DIR, ".dc", `v${Cabal.getDatabaseVersion()}`);
+
+const cabalClient = new Cabal({
+  maxFeeds: 1000,
+  config: {
+    dbdir: DATA_DIR,
+  },
+  preferredPort: "3600",
+});
+
+const STATE_FILE = path.join(DATA_DIR, "setting.sqlite");
+
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: STATE_FILE,
+  logging: console.log,
+});
+
+class DataUser extends Model {}
+
+DataUser.init(
+  {
+    currentCabal: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    login: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    modelName: "User",
+  }
+);
+
+class DataCabal extends Model {}
+
+DataCabal.init(
+  {
+    key: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    modelName: "Cabal",
+  }
+);
+
+class DataChannel extends Model {}
+
+DataChannel.init(
+  {
+    cabal: {
+      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
+
+      references: {
+        model: DataChannel,
+        key: "id",
+      },
+    },
+    notification: {
+      type: DataTypes.BOOLEAN,
+    },
+  },
+  {
+    sequelize,
+    modelName: "Channel",
+  }
+);
+
+const settingCreateFirstCabal = async function (key, login) {
+  const newUser = await User.create({ currentCabal: key, login: login });
+  await newUser.save();
+};
+
+ipcMain.handle("apiClientFirstCabalCreate", async (event, args) => {
+  const result = await cabalClient.createCabal().then((cabal) => {
+    return cabal;
+  });
+  settingCreateFirstCabal(result.key, args);
+  return result.key;
 });

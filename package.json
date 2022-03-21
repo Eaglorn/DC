@@ -14,10 +14,12 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@sequelize/core": "^7.0.0-alpha.10",
     "cabal-client": "^7.2.2",
     "core-js": "^3.6.5",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
+    "sqlite3": "^5.0.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0"
   },
@@ -25,6 +27,7 @@
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.0.0",
     "electron": "^17.1.2",
+    "electron-builder": "^22.4.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^8.5.0",

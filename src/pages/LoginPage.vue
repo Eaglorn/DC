@@ -23,7 +23,7 @@
             style="width: 300px"
             color="primary"
             label="Создать"
-            @click="createCabal()"
+            @click="createFirstCabal()"
           />
         </div>
       </div>
@@ -46,26 +46,22 @@ export default {
   setup() {
     const $cabalStore = useCabalStore();
 
-    const cabalClient = window.apiCabal.client;
-
-    //console.log(LocalStorage.getItem("fio"));
-    //LocalStorage.set("fio", "AAA");
-    //console.log(LocalStorage.getItem("fio"));
-
     const formCabal = ref("");
     const formLogin = ref("");
 
-    const createCabal = function () {
-      const res = window.apiCabal.createCabal().then((result) => {
-        return result;
-      });
-      console.log(res);
+    const createFirstCabal = async function () {
+      const newFirstCabalKey = await window.apiCabal
+        .createFirstCabal(formLogin.value)
+        .then((result) => {
+          return result;
+        });
+      console.log(newFirstCabalKey);
     };
 
     return {
       formCabal,
       formLogin,
-      createCabal,
+      createFirstCabal,
     };
   },
 };

@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
         <q-toolbar-title></q-toolbar-title>
-        <q-btn flat round color="black" icon="my_location" @click="logCabal" />
+        <q-btn flat round color="black" icon="my_location" />
       </q-toolbar>
     </q-header>
 
@@ -55,11 +55,6 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
-    const cabalClient = window.apiCabal.client;
-
-    const logCabal = function () {
-      console.log(cabalClient);
-    };
 
     return {
       essentialLinks: linksList,
@@ -67,7 +62,6 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      logCabal,
     };
   },
 });

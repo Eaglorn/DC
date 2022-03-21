@@ -16,51 +16,15 @@
  *   })
  */
 
-import { contextBridge } from "electron";
-import Cabal from "cabal-client";
-import path from "path";
-import { homedir } from "os";
-
-const HOME_DIR = homedir();
-const DATA_DIR = path.join(
-  HOME_DIR,
-  ".cabal",
-  `v${Cabal.getDatabaseVersion()}`
-);
-
-const cabalClient = new Cabal({
-  maxFeeds: 1000,
-  config: {
-    dbdir: DATA_DIR,
-  },
-  preferredPort: "3600",
-});
-
-cabalClient.getCurrentCabal;
-
-/*contextBridge.exposeInMainWorld("apiCabal", {
-  client: cabalClient,
-  createCabal: async () => {
-    var newCabal = null;
-    await cabalClient.createCabal().then((cabal) => {
-      newCabal = cabal;
-    });
-    return newCabal;
-  },
-  getCurrentCabal: function () {
-    return cabalClient.getCurrentCabal();
-  },
-});*/
+import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("apiCabal", {
-  cabalClient,
-  async createCabal() {
-    var newCabal = await cabalClient.createCabal().then((cabal) => {
-      return cabal;
-    });
-    return newCabal.key;
-  },
-  getCurrentCabal() {
-    return cabalClient.getCurrentCabal();
+  async createFirstCabal(login) {
+    const result = await ipcRenderer
+      .invoke("apiClientFirstCabalCreate", login)
+      .then((result) => {
+        return result;
+      });
+    return result;
   },
 });
