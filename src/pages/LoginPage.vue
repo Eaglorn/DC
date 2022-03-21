@@ -4,12 +4,19 @@
       <div class="q-gutter-md flex justify-center" style="width: 300px">
         <div>
           <q-input
-            class="form-input"
+            class="form-input shadow-1"
             filled
+            outlined
             v-model="formCabal"
             label="Ссылка"
           />
-          <q-input class="form-input" filled v-model="formLogin" label="ФИО" />
+          <q-input
+            class="form-input shadow-1"
+            filled
+            outlined
+            v-model="formLogin"
+            label="ФИО"
+          />
           <q-btn
             style="width: 300px"
             class="form-input"
@@ -17,8 +24,14 @@
             label="Войти"
           />
         </div>
-        <p>Если вам нужно создать новый</p>
         <div class="items-end">
+          <q-input
+            class="form-input shadow-1"
+            filled
+            outlined
+            v-model="formLogin"
+            label="ФИО"
+          />
           <q-btn
             style="width: 300px"
             color="primary"
@@ -55,7 +68,6 @@ export default {
         .then((result) => {
           return result;
         });
-      console.log(newFirstCabalKey);
     };
 
     return {
