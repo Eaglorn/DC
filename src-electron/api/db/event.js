@@ -9,13 +9,11 @@ event.init(
       type: DataTypes.BIGINT,
       primaryKey: true,
     },
-    currentCabal: {
+    name: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
-    login: {
-      type: DataTypes.STRING,
-      allowNull: true,
+    event: {
+      type: DataTypes.JSON,
     },
   },
   {

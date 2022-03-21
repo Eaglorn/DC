@@ -1,4 +1,11 @@
-import { app, BrowserWindow, nativeTheme } from "electron";
+import {
+  app,
+  BrowserWindow,
+  nativeTheme,
+  Menu,
+  Tray,
+  Notification,
+} from "electron";
 import path from "path";
 import os from "os";
 
@@ -43,12 +50,46 @@ function createWindow() {
     });
   }
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
+  mainWindow.on("minimize", function (event) {
+    event.preventDefault();
+    mainWindow.minimize();
+  });
+
+  mainWindow.on("close", function (event) {
+    event.preventDefault();
+    mainWindow.minimize();
   });
 }
 
-app.whenReady().then(createWindow);
+let tray = null;
+
+app
+  .whenReady()
+  .then(createWindow)
+  .then(() => {
+    tray = new Tray(path.resolve(__dirname, "icons/icon.png"));
+    tray.setToolTip("DC");
+    var contextMenu = Menu.buildFromTemplate([
+      {
+        label: "Закрыть",
+        click: function () {
+          tray.destroy();
+          tray = null;
+          mainWindow.destroy();
+          mainWindow = null;
+        },
+      },
+    ]);
+    tray.setContextMenu(contextMenu);
+    tray.setIgnoreDoubleClickEvents(true);
+    tray.on("click", function (e) {
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      } else {
+        mainWindow.show();
+      }
+    });
+  });
 
 app.on("window-all-closed", () => {
   if (platform !== "darwin") {

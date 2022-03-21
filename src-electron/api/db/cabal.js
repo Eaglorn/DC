@@ -11,19 +11,15 @@ cabal.init(
     },
     key: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     channel: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     notification: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
     },
   },
   {

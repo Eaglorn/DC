@@ -11,11 +11,9 @@ user.init(
     },
     currentCabal: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     login: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
   },
   {
