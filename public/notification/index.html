@@ -70,7 +70,15 @@
                 >{{message.number}}/{{messages.length}}</span
               >
             </div>
-            <div>CLOSE</div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                style="padding: 0 !important; border: none"
+              >
+                <i class="fa-solid fa-circle-xmark fa-2x"></i>
+              </button>
+            </div>
           </div>
         </div>
         <div class="card-body my-p-m-t-b">
@@ -82,6 +90,8 @@
               font-size: 14px;
             "
           >
+            <strong>{{message.autor}}</strong>
+            <br />
             {{message.text}}
           </p>
         </div>
@@ -98,6 +108,7 @@
               time: "22.03.2022 21:55",
               cabal: "ИТ",
               channel: "Основной",
+              autor: "Аверин Алексей Александрович",
               text: "Документы на подпись приносить не позднее 16:45!",
             },
           };

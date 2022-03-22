@@ -39,7 +39,7 @@ function createWindow() {
   mainWindow.loadURL(process.env.APP_URL);
 
   const childWindows = new BrowserWindow({
-    width: 420,
+    width: 520,
     height: 160,
     modal: true,
     frame: false,
@@ -60,7 +60,7 @@ function createWindow() {
   childWindows.setSkipTaskbar(true);
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
-  childWindows.setPosition(dimensions.width - 425, dimensions.height - 165);
+  childWindows.setPosition(dimensions.width - 525, dimensions.height - 165);
   //childWindows.hide();
 
   if (process.env.DEBUGGING) {
