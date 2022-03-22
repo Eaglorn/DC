@@ -5,9 +5,13 @@ import {
   Menu,
   Tray,
   Notification,
+  screen,
 } from "electron";
+import { initialize, enable } from "@electron/remote/main";
 import path from "path";
 import os from "os";
+
+initialize();
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
@@ -28,8 +32,9 @@ function createWindow() {
    */
   mainWindow = new BrowserWindow({
     icon: path.resolve(__dirname, "icons/icon.png"), // tray icon
-    width: 1000,
+    width: 1200,
     height: 600,
+    frame: false,
     useContentSize: true,
     webPreferences: {
       contextIsolation: true,
@@ -37,6 +42,35 @@ function createWindow() {
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
     },
   });
+
+  const child = new BrowserWindow({
+    width: 260,
+    height: 140,
+    modal: true,
+    show: true,
+    resizable: false,
+    frame: false,
+    webPreferences: {
+      contextIsolation: true,
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+    },
+  });
+  child.removeMenu();
+  const publicFolder = path.resolve(
+    __dirname,
+    process.env.QUASAR_PUBLIC_FOLDER
+  );
+  child.loadFile(publicFolder + "/notification/index.html");
+  //child.webContents.openDevTools();
+
+  child.setSkipTaskbar(true);
+
+  const display = screen.getPrimaryDisplay();
+  const dimensions = display.workArea;
+
+  child.setPosition(dimensions.width - 263, dimensions.height - 143);
+
+  enable(mainWindow.webContents);
 
   mainWindow.loadURL(process.env.APP_URL);
 

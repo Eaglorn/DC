@@ -1,6 +1,5 @@
 import { ipcMain } from "electron";
 import { WindowsBalloon } from "node-notifier";
-import notifier from "electron-notifications";
 import path from "path";
 import cabalClient from "../cabal";
 import user from "../db/user";

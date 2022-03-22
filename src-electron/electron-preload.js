@@ -17,6 +17,7 @@
  */
 
 import { contextBridge, ipcRenderer } from "electron";
+import { BrowserWindow } from "@electron/remote";
 
 contextBridge.exposeInMainWorld("apiCabal", {
   async createFirstCabal(login) {
@@ -26,5 +27,25 @@ contextBridge.exposeInMainWorld("apiCabal", {
         return result;
       });
     return result;
+  },
+});
+
+contextBridge.exposeInMainWorld("apiWindow", {
+  minimize() {
+    BrowserWindow.getFocusedWindow().minimize();
+  },
+
+  toggleMaximize() {
+    const win = BrowserWindow.getFocusedWindow();
+
+    if (win.isMaximized()) {
+      win.unmaximize();
+    } else {
+      win.maximize();
+    }
+  },
+
+  close() {
+    BrowserWindow.getFocusedWindow().hide();
   },
 });
