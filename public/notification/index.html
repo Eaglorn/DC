@@ -1,12 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
   <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./css/all.css" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
     <script src="./js/vue.global.prod.js"></script>
-    <script src="./js/bootstrap.bundle.min.js"></script>
+    <style>
+      .my-p-m-t-b {
+        padding-bottom: 4px !important;
+        margin-bottom: 4px !important;
+      }
+      .my-title {
+        min-height: 100%;
+      }
+    </style>
   </head>
   <body>
-    <i class="fa-duotone fa-arrow-right-from-arc"></i>
+    <div id="app">
+      <div class="card">
+        <div
+          class="card-header fixed-top my-p-m-t-b"
+          style="font-size: 12px; background-color: #708a2d"
+        >
+          <div class="d-flex justify-content-between align-self-center">
+            <div>
+              <strong>
+                {{message.time}}
+                <br />
+                {{message.cabal}} => {{message.channel}}
+              </strong>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                style="padding: 0 !important; border: none"
+              >
+                <i
+                  class="fa-solid fa-circle-arrow-left fa-2x"
+                  style="color: #1d548b"
+                ></i>
+              </button>
+              &nbsp; &nbsp;
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                style="padding: 0 !important; border: none"
+              >
+                <i
+                  class="fa-solid fa-circle-check fa-2x"
+                  style="color: #095e1b"
+                ></i>
+              </button>
+              &nbsp; &nbsp;
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                style="padding: 0 !important; border: none"
+              >
+                <i
+                  class="fa-solid fa-circle-arrow-right fa-2x"
+                  style="color: #1d548b"
+                ></i>
+              </button>
+            </div>
+            <div>
+              <span class="badge bg-Light text-dark" style="font-size: 18px"
+                >{{message.number}}/{{messages.length}}</span
+              >
+            </div>
+            <div>CLOSE</div>
+          </div>
+        </div>
+        <div class="card-body my-p-m-t-b">
+          <p
+            class="card-text"
+            style="
+              min-height: 130px;
+              padding-top: 34px !important;
+              font-size: 14px;
+            "
+          >
+            {{message.text}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      Vue.createApp({
+        data() {
+          return {
+            messages: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+            message: {
+              number: 7,
+              time: "22.03.2022 21:55",
+              cabal: "ИТ",
+              channel: "Основной",
+              text: "Документы на подпись приносить не позднее 16:45!",
+            },
+          };
+        },
+      }).mount("#app");
+    </script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
