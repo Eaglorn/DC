@@ -43,7 +43,7 @@ function createWindow() {
     },
   });
 
-  const child = new BrowserWindow({
+  const childWindows = new BrowserWindow({
     width: 260,
     height: 140,
     modal: true,
@@ -55,20 +55,20 @@ function createWindow() {
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
     },
   });
-  child.removeMenu();
+  childWindows.removeMenu();
   const publicFolder = path.resolve(
     __dirname,
     process.env.QUASAR_PUBLIC_FOLDER
   );
-  child.loadFile(publicFolder + "/notification/index.html");
+  childWindows.loadFile(publicFolder + "/notification/index.html");
   //child.webContents.openDevTools();
 
-  child.setSkipTaskbar(true);
+  childWindows.setSkipTaskbar(true);
 
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
 
-  child.setPosition(dimensions.width - 263, dimensions.height - 143);
+  childWindows.setPosition(dimensions.width - 263, dimensions.height - 143);
 
   enable(mainWindow.webContents);
 
@@ -107,10 +107,15 @@ app
       {
         label: "Закрыть",
         click: function () {
-          tray.destroy();
-          tray = null;
-          mainWindow.destroy();
-          mainWindow = null;
+          try {
+            app.exit();
+            tray.destroy();
+            childWindows.destroy();
+            mainWindow.destroy();
+            tray = null;
+            childWindows = null;
+            mainWindow = null;
+          } catch {}
         },
       },
     ]);
