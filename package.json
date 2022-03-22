@@ -18,8 +18,6 @@
     "@sequelize/core": "^7.0.0-alpha.10",
     "cabal-client": "^7.2.2",
     "core-js": "^3.6.5",
-    "electron-notifications": "^1.0.0",
-    "node-notifier": "^10.0.1",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "sqlite3": "^5.0.2",

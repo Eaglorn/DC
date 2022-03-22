@@ -1,12 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  nativeTheme,
-  Menu,
-  Tray,
-  Notification,
-  screen,
-} from "electron";
+import { app, BrowserWindow, nativeTheme, Menu, Tray, screen } from "electron";
 import { initialize, enable } from "@electron/remote/main";
 import path from "path";
 import os from "os";
@@ -43,13 +35,16 @@ function createWindow() {
     },
   });
 
+  enable(mainWindow.webContents);
+  mainWindow.loadURL(process.env.APP_URL);
+
   const childWindows = new BrowserWindow({
     width: 260,
     height: 140,
     modal: true,
-    show: true,
-    resizable: false,
     frame: false,
+    alwaysOnTop: true,
+    useContentSize: true,
     webPreferences: {
       contextIsolation: true,
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
@@ -60,25 +55,16 @@ function createWindow() {
     __dirname,
     process.env.QUASAR_PUBLIC_FOLDER
   );
+  enable(childWindows.webContents);
   childWindows.loadFile(publicFolder + "/notification/index.html");
-  //child.webContents.openDevTools();
-
   childWindows.setSkipTaskbar(true);
-
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
-
   childWindows.setPosition(dimensions.width - 263, dimensions.height - 143);
 
-  enable(mainWindow.webContents);
-
-  mainWindow.loadURL(process.env.APP_URL);
-
   if (process.env.DEBUGGING) {
-    // if on DEV or Production with debug enabled
     mainWindow.webContents.openDevTools();
   } else {
-    // we're on production; no access to devtools pls
     mainWindow.webContents.on("devtools-opened", () => {
       mainWindow.webContents.closeDevTools();
     });
