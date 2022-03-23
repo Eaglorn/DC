@@ -39,12 +39,13 @@ function createWindow() {
   mainWindow.loadURL(process.env.APP_URL);
 
   const childWindows = new BrowserWindow({
-    width: 520,
-    height: 160,
-    modal: true,
+    width: 420,
+    height: 120,
     frame: false,
-    alwaysOnTop: true,
+    // alwaysOnTop: true,
     useContentSize: true,
+    movable: false,
+    //resizable: false,
     webPreferences: {
       contextIsolation: true,
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
@@ -60,14 +61,15 @@ function createWindow() {
   childWindows.setSkipTaskbar(true);
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
-  childWindows.setPosition(dimensions.width - 525, dimensions.height - 165);
-  //childWindows.hide();
+  childWindows.setPosition(dimensions.width - 425, dimensions.height - 125);
 
   if (process.env.DEBUGGING) {
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
+    childWindows.webContents.openDevTools();
   } else {
     mainWindow.webContents.on("devtools-opened", () => {
       mainWindow.webContents.closeDevTools();
+      childWindows.webContents.closeDevTools();
     });
   }
 
@@ -79,6 +81,11 @@ function createWindow() {
   mainWindow.on("close", function (event) {
     event.preventDefault();
     mainWindow.minimize();
+  });
+
+  childWindows.on("close", function (event) {
+    event.preventDefault();
+    childWindows.minimize();
   });
 }
 
@@ -129,4 +136,5 @@ app.on("activate", () => {
   }
 });
 
+const getNotificationsNew = require("./api/notification/getNotificationsNew");
 const firstCabal = require("./api/cabal/firstCabal");

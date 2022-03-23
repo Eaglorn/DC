@@ -30,7 +30,18 @@ contextBridge.exposeInMainWorld("apiCabal", {
   },
 });
 
-contextBridge.exposeInMainWorld("apiWindow", {
+contextBridge.exposeInMainWorld("apiNotifications", {
+  async getNotificationsNew() {
+    const result = await ipcRenderer
+      .invoke("apiNotificationsGetNew")
+      .then((result) => {
+        return result;
+      });
+    return result;
+  },
+});
+
+contextBridge.exposeInMainWorld("apiMainWindow", {
   minimize() {
     BrowserWindow.getFocusedWindow().minimize();
   },
@@ -45,6 +56,12 @@ contextBridge.exposeInMainWorld("apiWindow", {
     }
   },
 
+  close() {
+    BrowserWindow.getFocusedWindow().hide();
+  },
+});
+
+contextBridge.exposeInMainWorld("apiChildWindow", {
   close() {
     BrowserWindow.getFocusedWindow().hide();
   },

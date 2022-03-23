@@ -60,7 +60,7 @@
         </div>
 
         <div class="q-ml-md cursor-pointer non-selectable">
-          Edit
+          Редактрировать
           <q-menu auto-close>
             <q-list dense style="min-width: 100px">
               <q-item clickable>
@@ -97,19 +97,19 @@ export default defineComponent({
   setup() {
     function minimize() {
       if (process.env.MODE === "electron") {
-        window.apiWindow.minimize();
+        window.apiMainWindow.minimize();
       }
     }
 
     function toggleMaximize() {
       if (process.env.MODE === "electron") {
-        window.apiWindow.toggleMaximize();
+        window.apiMainWindow.toggleMaximize();
       }
     }
 
     function closeApp() {
       if (process.env.MODE === "electron") {
-        window.apiWindow.close();
+        window.apiMainWindow.close();
       }
     }
 

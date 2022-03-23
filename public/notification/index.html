@@ -25,10 +25,11 @@
         >
           <div class="d-flex justify-content-between align-self-center">
             <div>
-              <strong>
-                {{message.time}}
+              <strong v-if="messages.length > 0">
+                {{messages[currentMessage].time}}
                 <br />
-                {{message.cabal}} => {{message.channel}}
+                {{messages[currentMessage].cabal}} =>
+                {{messages[currentMessage].channel}}
               </strong>
             </div>
             <div>
@@ -66,8 +67,11 @@
               </button>
             </div>
             <div>
-              <span class="badge bg-Light text-dark" style="font-size: 18px"
-                >{{message.number}}/{{messages.length}}</span
+              <span
+                class="badge bg-Light text-dark"
+                style="font-size: 18px"
+                v-if="messages.length > 0"
+                >{{currentMessage + 1}}/{{messages.length + 1}}</span
               >
             </div>
             <div>
@@ -75,6 +79,7 @@
                 type="button"
                 class="btn btn-outline-dark"
                 style="padding: 0 !important; border: none"
+                @click="closeApp()"
               >
                 <i class="fa-solid fa-circle-xmark fa-2x"></i>
               </button>
@@ -84,15 +89,12 @@
         <div class="card-body my-p-m-t-b">
           <p
             class="card-text"
-            style="
-              min-height: 130px;
-              padding-top: 34px !important;
-              font-size: 14px;
-            "
+            style="padding-top: 34px !important; font-size: 14px"
+            v-if="messages.length > 0"
           >
-            <strong>{{message.autor}}</strong>
+            <strong>{{messages[currentMessage].author}}</strong>
             <br />
-            {{message.text}}
+            {{messages[currentMessage].text}}
           </p>
         </div>
       </div>
@@ -100,18 +102,37 @@
 
     <script>
       Vue.createApp({
+        created() {
+          this.interval = setInterval(this.updateNotifications, 10000);
+        },
+        beforeDestroy() {
+          if (this.interval) {
+            clearIntervall(this.interval);
+            this.interval = undefined;
+          }
+        },
         data() {
           return {
-            messages: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
-            message: {
-              number: 7,
-              time: "22.03.2022 21:55",
-              cabal: "ИТ",
-              channel: "Основной",
-              autor: "Аверин Алексей Александрович",
-              text: "Документы на подпись приносить не позднее 16:45!",
-            },
+            currentMessage: 0,
+            messages: [],
+            interval: undefined,
           };
+        },
+        methods: {
+          closeApp() {
+            window.apiChildWindow.close();
+          },
+          updateNotifications: async function () {
+            const newNotifications = await window.apiNotifications
+              .getNotificationsNew()
+              .then((result) => {
+                return result;
+              });
+            for (let i = 0; i < newNotifications.length; i++) {
+              this.messages.push(newNotifications[i]);
+            }
+            console.log(this.messages);
+          },
         },
       }).mount("#app");
     </script>
