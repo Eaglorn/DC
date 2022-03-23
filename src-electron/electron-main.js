@@ -39,8 +39,8 @@ function createWindow() {
   mainWindow.loadURL(process.env.APP_URL);
 
   const childWindows = new BrowserWindow({
-    width: 420,
-    height: 120,
+    width: 510,
+    height: 160,
     frame: false,
     // alwaysOnTop: true,
     useContentSize: true,
@@ -61,11 +61,11 @@ function createWindow() {
   childWindows.setSkipTaskbar(true);
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
-  childWindows.setPosition(dimensions.width - 425, dimensions.height - 125);
+  childWindows.setPosition(dimensions.width - 515, dimensions.height - 165);
 
   if (process.env.DEBUGGING) {
     // mainWindow.webContents.openDevTools();
-    childWindows.webContents.openDevTools();
+    //childWindows.webContents.openDevTools();
   } else {
     mainWindow.webContents.on("devtools-opened", () => {
       mainWindow.webContents.closeDevTools();

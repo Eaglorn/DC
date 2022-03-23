@@ -8,7 +8,7 @@ const settingNotificationGet = async function () {
     .then((result) => {
       result.forEach((item) => {
         newNotifications.push({
-          time: item.time,
+          time: "10:45 15.11.2023",
           cabal: item.cabal,
           channel: item.channel,
           author: item.author,
