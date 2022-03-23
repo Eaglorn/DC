@@ -2,16 +2,20 @@ import { ipcMain } from "electron";
 import notification from "../db/notification";
 
 const settingNotificationGet = async function () {
-  const newNotifications = await notification
-    .findAll({
-      attributes: ["time", "cabal", "channel", "author", "text"],
-      where: {
-        read: false,
-      },
-      raw: true,
-    })
+  const newNotifications = [];
+  await notification
+    .findAll()
     .then((result) => {
-      return result;
+      result.forEach((item) => {
+        newNotifications.push({
+          time: item.time,
+          cabal: item.cabal,
+          channel: item.channel,
+          author: item.author,
+          text: item.text,
+        });
+        item.destroy().then().catch();
+      });
     })
     .catch((err) => {
       console.log(err);

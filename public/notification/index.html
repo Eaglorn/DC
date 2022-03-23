@@ -37,6 +37,7 @@
                 type="button"
                 class="btn btn-outline-dark"
                 style="padding: 0 !important; border: none"
+                @click="previewMessage()"
               >
                 <i
                   class="fa-solid fa-circle-arrow-left fa-2x"
@@ -48,6 +49,7 @@
                 type="button"
                 class="btn btn-outline-dark"
                 style="padding: 0 !important; border: none"
+                @click="readMessage()"
               >
                 <i
                   class="fa-solid fa-circle-check fa-2x"
@@ -59,6 +61,7 @@
                 type="button"
                 class="btn btn-outline-dark"
                 style="padding: 0 !important; border: none"
+                @click="nextMessage()"
               >
                 <i
                   class="fa-solid fa-circle-arrow-right fa-2x"
@@ -71,7 +74,7 @@
                 class="badge bg-Light text-dark"
                 style="font-size: 18px"
                 v-if="messages.length > 0"
-                >{{currentMessage + 1}}/{{messages.length + 1}}</span
+                >{{currentMessage + 1}}/{{messages.length}}</span
               >
             </div>
             <div>
@@ -132,6 +135,16 @@
               this.messages.push(newNotifications[i]);
             }
             console.log(this.messages);
+          },
+          previewMessage() {
+            if (this.currentMessage > 0) this.currentMessage--;
+          },
+          nextMessage() {
+            if (messages.length > 1) this.currentMessage++;
+          },
+          readMessage() {
+            if (this.currentMessage > 0) this.currentMessage--;
+            myArray.splice(this.currentMessage + 1, 1);
           },
         },
       }).mount("#app");

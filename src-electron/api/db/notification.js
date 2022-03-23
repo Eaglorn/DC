@@ -9,10 +9,6 @@ notification.init(
       type: DataTypes.BIGINT,
       primaryKey: true,
     },
-    read: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
     time: {
       type: DataTypes.STRING,
     },
