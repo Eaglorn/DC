@@ -27,8 +27,8 @@ const settingCreateFirstCabal = async function (key, login) {
       time: faker.date
         .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
         .toString(),
-      cabal: faker.company.companyName(),
-      channel: faker.internet.domainName(),
+      cabal: faker.address.city(),
+      channel: faker.music.genre(),
       author: faker.name.findName(),
       text: faker.lorem.text(),
     })

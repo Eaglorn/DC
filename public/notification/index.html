@@ -6,93 +6,87 @@
     <link rel="stylesheet" type="text/css" href="./css/all.css" />
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css" />
     <script src="./js/vue.global.prod.js"></script>
-    <style>
-      .my-p-m-t-b {
-        padding-bottom: 4px !important;
-        margin-bottom: 4px !important;
-      }
-      .my-title {
-        min-height: 100%;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
     <div id="app">
       <div class="card">
         <div
-          class="card-header fixed-top my-p-m-t-b"
+          class="card-header fixed-top"
           style="font-size: 12px; background-color: #708a2d"
         >
-          <div class="d-flex justify-content-between align-self-center">
-            <div>
-              <strong v-if="messages.length > 0">
-                {{messages[currentMessage].time}}
-                <br />
-                {{messages[currentMessage].cabal}} =>
-                {{messages[currentMessage].channel}}
-              </strong>
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                style="padding: 0 !important; border: none"
-                @click="previewMessage()"
-              >
-                <i
-                  class="fa-solid fa-circle-arrow-left fa-2x"
-                  style="color: #1d548b"
-                ></i>
-              </button>
-              &nbsp; &nbsp;
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                style="padding: 0 !important; border: none"
-                @click="readMessage()"
-              >
-                <i
-                  class="fa-solid fa-circle-check fa-2x"
-                  style="color: #095e1b"
-                ></i>
-              </button>
-              &nbsp; &nbsp;
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                style="padding: 0 !important; border: none"
-                @click="nextMessage()"
-              >
-                <i
-                  class="fa-solid fa-circle-arrow-right fa-2x"
-                  style="color: #1d548b"
-                ></i>
-              </button>
-            </div>
-            <div>
-              <span
-                class="badge bg-Light text-dark"
-                style="font-size: 18px"
-                v-if="messages.length > 0"
-                >{{currentMessage + 1}}/{{messages.length}}</span
-              >
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                style="padding: 0 !important; border: none"
-                @click="closeApp()"
-              >
-                <i class="fa-solid fa-circle-xmark fa-2x"></i>
-              </button>
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-6 text-truncate" style="border: 1px solid black">
+                <strong v-if="messages.length > 0">
+                  {{messages[currentMessage].time}}
+                  <br />
+                  {{messages[currentMessage].cabal}} =>
+                  {{messages[currentMessage].channel}}
+                </strong>
+              </div>
+              <div class="col-3 text-truncate" style="border: 1px solid black">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  style="padding: 0 !important; border: none"
+                  @click="previewMessage()"
+                >
+                  <i
+                    class="fa-solid fa-circle-arrow-left fa-2x"
+                    style="color: #1d548b"
+                  ></i>
+                </button>
+                &nbsp; &nbsp;
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  style="padding: 0 !important; border: none"
+                  @click="readMessage()"
+                >
+                  <i
+                    class="fa-solid fa-circle-check fa-2x"
+                    style="color: #095e1b"
+                  ></i>
+                </button>
+                &nbsp; &nbsp;
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  style="padding: 0 !important; border: none"
+                  @click="nextMessage()"
+                >
+                  <i
+                    class="fa-solid fa-circle-arrow-right fa-2x"
+                    style="color: #1d548b"
+                  ></i>
+                </button>
+              </div>
+              <div class="col-1 text-truncate" style="border: 1px solid black">
+                <span
+                  class="badge bg-Light text-dark"
+                  style="font-size: 18px"
+                  v-if="messages.length > 0"
+                  >{{currentMessage + 1}}/{{messages.length}}</span
+                >
+              </div>
+              <div class="col-1 text-truncate" style="border: 1px solid black">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  style="padding: 0 !important; border: none"
+                  @click="closeApp()"
+                >
+                  <i class="fa-solid fa-circle-xmark fa-2x"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="card-body my-p-m-t-b">
+        <div class="card-body">
           <p
             class="card-text"
-            style="padding-top: 34px !important; font-size: 14px"
+            style="padding-top: 37px !important; font-size: 14px"
             v-if="messages.length > 0"
           >
             <strong>{{messages[currentMessage].author}}</strong>
@@ -140,11 +134,12 @@
             if (this.currentMessage > 0) this.currentMessage--;
           },
           nextMessage() {
-            if (messages.length > 1) this.currentMessage++;
+            if (this.messages.length > this.currentMessage + 1)
+              this.currentMessage++;
           },
           readMessage() {
             if (this.currentMessage > 0) this.currentMessage--;
-            myArray.splice(this.currentMessage + 1, 1);
+            this.messages.splice(this.currentMessage, 1);
           },
         },
       }).mount("#app");
