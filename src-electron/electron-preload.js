@@ -66,8 +66,6 @@ contextBridge.exposeInMainWorld("apiChildWindow", {
     BrowserWindow.getFocusedWindow().hide();
   },
   isMessages(isMessages) {
-    ipcRenderer
-      .invoke("apiChildWindowIsMessages", isMessages)
-      .then((result) => {});
+    ipcRenderer.invoke("apiChildWindowIsMessages", isMessages);
   },
 });

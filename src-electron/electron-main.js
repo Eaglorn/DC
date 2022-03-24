@@ -1,4 +1,12 @@
-import { app, BrowserWindow, nativeTheme, Menu, Tray, screen } from "electron";
+import {
+  app,
+  BrowserWindow,
+  nativeTheme,
+  Menu,
+  Tray,
+  screen,
+  ipcMain,
+} from "electron";
 import { initialize, enable } from "@electron/remote/main";
 import path from "path";
 import os from "os";
@@ -38,19 +46,23 @@ function createWindow() {
   enable(mainWindow.webContents);
   mainWindow.loadURL(process.env.APP_URL);
 
-  var isMessages = false;
-  const childWindows = new BrowserWindow({
+  let childWindows = new BrowserWindow({
     width: 510,
     height: 160,
     frame: false,
-    // alwaysOnTop: true,
+    alwaysOnTop: true,
     useContentSize: true,
     movable: false,
-    //resizable: false,
+    resizable: false,
     webPreferences: {
       contextIsolation: true,
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
     },
+  });
+  let isMessages = false;
+  ipcMain.handle("apiChildWindowIsMessages", (event, args) => {
+    isMessages = args;
+    if (isMessages) childWindows.show();
   });
   childWindows.removeMenu();
   const publicFolder = path.resolve(
@@ -63,6 +75,7 @@ function createWindow() {
   const display = screen.getPrimaryDisplay();
   const dimensions = display.workArea;
   childWindows.setPosition(dimensions.width - 515, dimensions.height - 165);
+  childWindows.minimize();
 
   if (process.env.DEBUGGING) {
     // mainWindow.webContents.openDevTools();
@@ -100,14 +113,6 @@ app
     tray.setToolTip("DC");
     var contextMenu = Menu.buildFromTemplate([
       {
-        label: "Открыть уведомления",
-        click: function () {
-          try {
-            childWindows.show();
-          } catch {}
-        },
-      },
-      {
         label: "Выйти из приложения",
         click: function () {
           try {
@@ -143,10 +148,6 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-ipcMain.handle("apiChildWindowIsMessages", (event, args) => {
-  this.isMessages = args;
 });
 
 const getNotificationsNew = require("./api/notification/getNotificationsNew");

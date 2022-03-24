@@ -117,7 +117,10 @@
         },
         methods: {
           closeApp() {
+            window.apiChildWindow.isMessages(false);
             window.apiChildWindow.close();
+            this.currentMessage = 0;
+            this.messages = [];
           },
           updateNotifications: async function () {
             const newNotifications = await window.apiNotifications
