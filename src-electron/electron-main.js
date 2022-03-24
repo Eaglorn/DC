@@ -38,6 +38,7 @@ function createWindow() {
   enable(mainWindow.webContents);
   mainWindow.loadURL(process.env.APP_URL);
 
+  var isMessages = false;
   const childWindows = new BrowserWindow({
     width: 510,
     height: 160,
@@ -99,7 +100,15 @@ app
     tray.setToolTip("DC");
     var contextMenu = Menu.buildFromTemplate([
       {
-        label: "Закрыть",
+        label: "Открыть уведомления",
+        click: function () {
+          try {
+            childWindows.show();
+          } catch {}
+        },
+      },
+      {
+        label: "Выйти из приложения",
         click: function () {
           try {
             app.exit();
@@ -134,6 +143,10 @@ app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.handle("apiChildWindowIsMessages", (event, args) => {
+  this.isMessages = args;
 });
 
 const getNotificationsNew = require("./api/notification/getNotificationsNew");

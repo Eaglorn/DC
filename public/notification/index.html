@@ -128,7 +128,8 @@
             for (let i = 0; i < newNotifications.length; i++) {
               this.messages.push(newNotifications[i]);
             }
-            console.log(this.messages);
+            if (this.messages.length > 0)
+              window.apiChildWindow.isMessages(true);
           },
           previewMessage() {
             if (this.currentMessage > 0) this.currentMessage--;
@@ -140,6 +141,10 @@
           readMessage() {
             if (this.currentMessage > 0) this.currentMessage--;
             this.messages.splice(this.currentMessage, 1);
+            if (this.messages.length == 0) {
+              window.apiChildWindow.isMessages(false);
+              window.apiChildWindow.close();
+            }
           },
         },
       }).mount("#app");
