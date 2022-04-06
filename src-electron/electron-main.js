@@ -78,8 +78,8 @@ function createWindow() {
   childWindows.minimize();
 
   if (process.env.DEBUGGING) {
-    // mainWindow.webContents.openDevTools();
-    //childWindows.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
+    // childWindows.webContents.openDevTools();
   } else {
     mainWindow.webContents.on("devtools-opened", () => {
       mainWindow.webContents.closeDevTools();

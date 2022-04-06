@@ -19,17 +19,18 @@
     "cabal-client": "^7.2.2",
     "core-js": "^3.21.1",
     "pinia": "^2.0.13",
-    "quasar": "^2.6.4",
+    "quasar": "^2.6.5",
     "sqlite3": "^5.0.2",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vue3-lottie": "^2.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@faker-js/faker": "^6.1.1",
     "@quasar/app-webpack": "^3.4.7",
     "electron": "^18.0.1",
-    "electron-builder": "^22.14.3",
+    "electron-builder": "^22.14.13",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^8.5.0",

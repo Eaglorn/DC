@@ -32,3 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 yarn.lock
+src/assets/lotties/first.json

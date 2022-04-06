@@ -38,6 +38,7 @@
             label="Создать"
             @click="createFirstCabal()"
           />
+          <Vue3Lottie :animationData="lottieFirst" :height="200" :width="200" />
         </div>
       </div>
     </div>
@@ -54,8 +55,15 @@
 import { useCabalStore } from "stores/cabal";
 import { ref } from "vue";
 
+import { Vue3Lottie } from "vue3-lottie";
+import "vue3-lottie/dist/style.css";
+const lottieFirst = require("../assets/lotties/first.json");
+
 export default {
   name: "LoginName",
+  components: {
+    Vue3Lottie,
+  },
   setup() {
     const $cabalStore = useCabalStore();
 
@@ -74,6 +82,7 @@ export default {
       formCabal,
       formLogin,
       createFirstCabal,
+      lottieFirst,
     };
   },
 };
