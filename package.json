@@ -14,28 +14,28 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.8",
-    "@quasar/extras": "^1.13.5",
+    "@quasar/extras": "^1.13.6",
     "@sequelize/core": "^7.0.0-alpha.10",
     "cabal-client": "^7.2.2",
-    "core-js": "^3.21.1",
-    "pinia": "^2.0.13",
-    "quasar": "^2.6.5",
-    "sqlite3": "^5.0.2",
-    "vue": "^3.2.31",
-    "vue-router": "^4.0.14",
-    "vue3-lottie": "^2.1.0"
+    "core-js": "^3.22.5",
+    "pinia": "^2.0.14",
+    "quasar": "^2.6.6",
+    "sqlite3": "^5.0.8",
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.15",
+    "vue3-lottie": "^2.1.0",
+    "@faker-js/faker": "^6.3.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
-    "@faker-js/faker": "^6.1.1",
-    "@quasar/app-webpack": "^3.4.7",
-    "electron": "^18.0.1",
-    "electron-builder": "^22.14.13",
-    "eslint": "^8.12.0",
+    "@quasar/app-webpack": "^3.5.1",
+    "electron": "^18.2.3",
+    "electron-builder": "^23.0.3",
+    "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-vue": "^8.5.0",
+    "eslint-plugin-vue": "^8.7.1",
     "eslint-webpack-plugin": "^3.1.1",
-    "prettier": "^2.6.1"
+    "prettier": "^2.6.2"
   },
   "browserslist": [
     "last 1 Chrome versions",
